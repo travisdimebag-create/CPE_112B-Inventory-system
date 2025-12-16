@@ -1,34 +1,36 @@
 #include <iostream>
-#include <vector>
 #include <map>
+#include <string>
 
-using namespace std;
-
-int cell_create(void){
-	int current_slots = 0, wanted_slots, read_input;
-	
-	while (read_input != 0){
-		cout << "there are currently " << current_slots << " slots in your inventory." << endl;
-		cin << read_input;
-		wanted_slots = read_input + current_slots;
-		for (int i = current_slots + 1; i != wanted_slots; current_slots++){
-			inventory.push_back({});
-			current_slots = i;
-		}
-		cout << "Done!" << endl;
-		cout << "Total slots: " << current_slots << endl;
-		cout << "Wanted slots: " << wanted_slots << endl;
-		wanted_slots = 0;
-	}
-	
-}
 
 int main(void){
-	vector <vector<int>> inventory;
-	cell_create();
+	std::multimap<std::string, int> inventory; //initiate dynamic container
 	
-	for (int i = 0; 0 != sizeof(inventory); ++i){
-		cout << i
+	int current_slots = 0, wanted_slots, read_input = -1;
+	
+	while (read_input != 0){
+		std::cout << "there are currently " << current_slots << " slots in your inventory." << std::endl;
+		std::cout << "Insert how many?" << std::endl << "> ";
+		std::cin >> read_input;
+		wanted_slots = read_input + current_slots; //Debug. How many TOTAL slots user wants. If different from ACTUAL total slots IF something goes wrong.
+		
+		//create empty cells with a key type string, value of int.
+		for (int i = 0; i != read_input; i++, current_slots++){
+			inventory.insert({"Empty cell", 0});
+		}
+		std:: cout << "Done!" << std::endl << "Wanted slots: " << wanted_slots << std::endl;
+		wanted_slots = 0;
+	
+		//print created empty cells
+		for (const auto& pair : inventory){
+			std::cout << pair.first << ": " << pair.second << std::endl;
+		}
+		/*
+		 * This for loop basically says: "For every key/value pair in inventory, call it pair", where pair.first is the key (string in our example) and pair.secon is the value.
+		 *const -- SO that we read the data, not modify it.
+		 *auto -- multimap is actually std::pair<const std::string, std::vector<int>>, auto *lets compiler figure it out, lol.
+		 *& to avoid copying the pair
+		 */
 	}
 	return 0;
 }
